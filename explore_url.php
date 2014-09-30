@@ -32,6 +32,11 @@ function validateInput($argv)
         $isValid = true;
     }
 
+    if (!filter_var($argv[1], FILTER_VALIDATE_URL)) {
+        echo 'Bad url: ' . $argv[1] . PHP_EOL;
+        die(1);
+    }
+
     if (!$isValid) {
         echo 'php explore_url <url> [--urldecode]' . PHP_EOL;
         die(1);
@@ -47,13 +52,10 @@ $url = $argv[1];
 $GETParts = explode('&', $url);
 $pathParts = explode('?', $GETParts[0]);
 
-if (count($pathParts) !== 2) {
-    throw new Exception('Not a valid url : found more than 1 ?');
-}
-
 $path = $pathParts[0];
 $firstParameter = $pathParts[1];
-$parameters = array_slice($GETParts, 1);
+$moreParameters = array_slice($GETParts, 1);
+$parameters = array_merge(array($firstParameter), $moreParameters);
 
 // echo result
 echo TextColorWriter::textColor('URL ANALYSIS:', TextColorWriter::BASH_PROMPT_GREEN) . PHP_EOL;
@@ -63,7 +65,6 @@ echo TextColorWriter::textColor('GET parameters:', TextColorWriter::BASH_PROMPT_
 $urldecode = isset($argv[2]);
 
 // echo GET parameters
-echo echoParameter($firstParameter, $urldecode);
 foreach ($parameters as $parameter) {
     echoParameter($parameter, $urldecode);
 }
