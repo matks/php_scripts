@@ -4,6 +4,7 @@
  * Text Color Writer
  *
  * Thanks Thijs Lensselink
+ *
  * @link http://blog.lenss.nl/2012/05/adding-colors-to-php-cli-script-output/
  */
 class TextColorWriter
@@ -20,6 +21,7 @@ class TextColorWriter
      *
      * @param  string $string
      * @param  int    $colorID
+     *
      * @return string
      */
     public static function textColor($string, $colorID)
@@ -28,7 +30,7 @@ class TextColorWriter
             throw new Exception("Error unknown color ID $colorID");
         }
 
-        $colorChar = "\033[".$colorID."m";
+        $colorChar     = "\033[" . $colorID . "m";
         $coloredString = $colorChar . $string . "\033[0m";
 
         return $coloredString;
