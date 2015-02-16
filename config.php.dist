@@ -1,0 +1,33 @@
+<?php
+
+// pgsql
+$config = array(
+    'driver'   => 'pgsql',
+    'hostname' => 'localhost',
+    'port'     => 5432,
+    'database' => 'database',
+    'user'     => 'user',
+    'password' => 'pwd'
+);
+
+function getOrderedColumns()
+{
+    $columns = array(
+        'id',
+        'date',
+        'attr1',
+        'attr2'
+    );
+
+    $o = implode(',', $columns);
+
+    return $o;
+}
+
+$table1 = 'table1';
+$table2 = 'table2';
+
+function getOrderBy()
+{
+    return 'id';
+}

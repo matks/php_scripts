@@ -2,6 +2,7 @@
 composer.phar
 vendor/*
 
+config.php
 
 # Vagrant
 .vagrant/
