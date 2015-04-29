@@ -11,6 +11,7 @@ function buildSpaceString($length)
     for ($i = 0; $i < $length; $i++) {
         $string .= ' ';
     }
+
     return $string;
 }
 
@@ -24,13 +25,14 @@ function echoArrayAsString(array $elements, $tabLength)
 {
     $tab = buildSpaceString($tabLength + 1);
 
-    $elementsAsString = implode(' ', $elements);
+    $elementsAsString      = implode(' ', $elements);
     $commaSeparatedStrings = explode(',', $elementsAsString);
 
     $length = count($commaSeparatedStrings);
 
     if ($length === 1) {
         echo ' ' . $commaSeparatedStrings[0] . PHP_EOL;
+
         return;
     }
 
@@ -94,15 +96,17 @@ function isSpecificDoubleKeyWord($word)
 }
 
 /**
+ * Attempt to gather words in 'SQL parts' (for ex. all SELECT all together)
+ *
  * @param array $words
  *
  * @return array
  */
-function sortWords(array $words)
+function sortWordsInParts(array $words)
 {
-    $parts = array();
-
-    $keyWord = 'SELECT';
+    // variables init
+    $parts   = array();
+    $keyWord = '';
     $part    = array();
 
     $length = count($words);
@@ -110,25 +114,41 @@ function sortWords(array $words)
     for ($i = 0; $i < $length; $i++) {
 
         $currentWord = $words[$i];
-        $nextWord    = $words[$i + 1];
+
+        if ($i == ($length - 1)) {
+            $nextWord = '';
+        } else {
+            $nextWord = $words[$i + 1];
+        }
+
         $doubleWord = $currentWord . ' ' . $nextWord;
 
         if (isSpecificSingleKeyWord($currentWord)) {
 
-            $parts[$keyWord] = $part;
-            $keyWord         = $currentWord;
-            $part            = array();
+            // found key word: gather all previous words in a part
+
+            $parts[] = [$keyWord, $part];
+            $keyWord = $currentWord;
+            $part    = array();
         } else if (isSpecificDoubleKeyWord($doubleWord)) {
-            $parts[$keyWord] = $part;
-            $keyWord         = $doubleWord;
-            $part            = array();
+
+            // found key double word: gather all previous words in a part
+
+            $parts[] = [$keyWord, $part];
+            $keyWord = $doubleWord;
+            $part    = array();
+
+            // skip next word as it is part of the double word
             $i++;
         } else {
+
+            // keep adding words in the current part
+
             $part[] = $currentWord;
         }
     }
 
-    $parts[$keyWord] = $part;
+    $parts[] = [$keyWord, $part];
 
     return $parts;
 }
@@ -162,17 +182,21 @@ $query = $argv[1];
 $query = str_replace(array("\r\n", "\r", "\n"), " ", $query);
 
 $words      = explode(' ', $query);
-$queryParts = sortWords($words);
+$queryParts = sortWordsInParts($words);
 
 echo TextColorWriter::textColor('QUERY ANALYSIS:', TextColorWriter::BASH_PROMPT_GREEN) . PHP_EOL;
 
-foreach ($queryParts as $key => $part) {
+foreach ($queryParts as $part) {
+    $key     = $part[0];
+    $content = $part[1];
+
     $tabLength = strlen($key) + 1;
 
-    if (in_array($key, array('AND','OR'))) {
+    if (in_array($key, array('AND', 'OR'))) {
+        // additionnal space
         echo '   ';
     }
 
     echo ' ' . TextColorWriter::textColor($key, TextColorWriter::BASH_PROMPT_YELLOW) . ' ';
-    echoArrayAsString($part, $tabLength);
+    echoArrayAsString($content, $tabLength);
 }
