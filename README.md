@@ -26,4 +26,5 @@ compare_sql_tables
 php compare_sql_tables.php
 ```
 Compare two SQL tables to check whether their content is identical
+
 Add settings/credentials in a config.php file to run it
