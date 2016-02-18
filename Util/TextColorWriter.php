@@ -14,6 +14,7 @@ class TextColorWriter
     const BASH_PROMPT_GREEN  = 32;
     const BASH_PROMPT_YELLOW = 33;
     const BASH_PROMPT_BLUE   = 34;
+    const BASH_PROMPT_CYAN   = 36;
     const BASH_PROMPT_WHITE  = 37;
 
     /**
@@ -49,7 +50,8 @@ class TextColorWriter
             static::BASH_PROMPT_GREEN,
             static::BASH_PROMPT_YELLOW,
             static::BASH_PROMPT_BLUE,
-            static::BASH_PROMPT_WHITE
+            static::BASH_PROMPT_WHITE,
+            static::BASH_PROMPT_CYAN,
         );
 
         return $colors;
