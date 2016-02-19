@@ -24,6 +24,7 @@ function getOrderedColumns()
     return $o;
 }
 
+$table = 'table';
 $table1 = 'table1';
 $table2 = 'table2';
 
@@ -31,3 +32,7 @@ function getOrderBy()
 {
     return 'id';
 }
+
+
+$select = "id";
+$where = "email";
