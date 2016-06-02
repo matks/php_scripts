@@ -46,3 +46,11 @@ php get_by_sql_value.php inputFile outputFile
 Read input file, get lines from an SQL table from file1 value, write lines into output file
 
 Add settings/credentials in a config.php file to run it
+
+find_binary
+-----------
+
+```bash
+php find_binary.php <integer>
+```
+Decompose an integer into powers of two
