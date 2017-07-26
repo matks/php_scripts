@@ -59,6 +59,8 @@ compare_hashmaps
 ----------------
 
 ```bash
-php compare_yaml_hashmaps.php file1 file2
+php compare_yaml_hashmaps.php file1 file2 <root_node>
 ```
 Compare 2 YAML hashmap files (such as symfony parameters.yml files)
+
+Example: `$ php compare_yaml_hashmaps.php parameters1.yml parameters2.yml 'parameters'`
