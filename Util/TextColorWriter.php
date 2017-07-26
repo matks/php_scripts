@@ -42,7 +42,7 @@ class TextColorWriter
      *
      * @return array
      */
-    private function getKnownColors()
+    private static function getKnownColors()
     {
         $colors = array(
             static::BASH_PROMPT_BLACK,

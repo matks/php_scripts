@@ -1,0 +1,9 @@
+{
+    "name": "matks/php_scripts",
+    "description": "Useful php scripts",
+    "type": "library",
+    "require": {
+        "symfony/yaml": "^3.2"
+    },
+    "license": "MIT"
+}

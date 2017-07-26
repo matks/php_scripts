@@ -54,3 +54,11 @@ find_binary
 php find_binary.php <integer>
 ```
 Decompose an integer into powers of two
+
+compare_hashmaps
+----------------
+
+```bash
+php compare_yaml_hashmaps.php file1 file2
+```
+Compare 2 YAML hashmap files (such as symfony parameters.yml files)
